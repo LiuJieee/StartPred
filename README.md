@@ -67,7 +67,7 @@ Please note that input files (.fasta) for 'DanQ_feature_prepare.py' must not con
 
 In this section, the example file titled 'test_DanQ_features.h5' is available for download at https://zenodo.org/records/13689721.
 
-### Pathogenicity Prediction
+### Pathogenicity prediction
 ```bash
 cd StartPred
 conda activate StartPred
