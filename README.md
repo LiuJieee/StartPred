@@ -58,8 +58,8 @@ In this section, the example file titled 'test_GPN-MSA_feature.pth' is available
 
 ### Quantify the epigenetic feature based on DanQ
 ```bash
-cd DanQ
 conda activate DanQ
+cd DanQ
 python Fasta_data_prepare.py
 python DanQ_feature_prepare.py
 ```
@@ -69,8 +69,8 @@ In this section, the example file titled 'test_DanQ_features.h5' is available fo
 
 ### Pathogenicity prediction
 ```bash
-cd StartPred
 conda activate StartPred
+cd StartPred
 python main.py
 ```
 
