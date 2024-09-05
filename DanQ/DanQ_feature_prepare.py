@@ -9,7 +9,7 @@ import argparse
 
 import sys
 sys.path.append('../')
-from models.DanQ import DanQ
+from DanQ import DanQ
 
 SEQ_LENGTH = 1000      # sequence length accepted by DanQ model
 
@@ -35,7 +35,7 @@ def get_sequence(filename):
 
 # get 919 features from DanQ model
 def prepare_sequence(model, args, type='ref'):
-    dataset_filename = os.path.join(args.path, f'Testing1_Label_700pos_486neg_start-lost_hg38_1001bp_kmer_random_{type}-seq.fasta')
+    dataset_filename = os.path.join(args.path, f'test_{type}-seq.fasta')
     
     dataset_seq = get_sequence(dataset_filename)
 
@@ -66,7 +66,7 @@ if __name__ == '__main__':
 
 
     # save everything in one h5 file
-    file_path = os.path.join(args.path, 'test.h5')
+    file_path = os.path.join(args.path, '../data/test_DanQ_feature.h5')
     hf = h5py.File(file_path, 'w')
     hf.create_dataset('feat_ref', data=ref)
     hf.create_dataset('feat_alt', data=alt)

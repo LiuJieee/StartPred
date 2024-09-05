@@ -12,11 +12,11 @@ import torch
 from transformers import AutoModel, AutoModelForMaskedLM
 
 # 设置模型路径和多序列比对（MSA）数据路径
-model_path = '/data4/weichen/GPNMSA/model'
-msa_path = '/data4/weichen/GPNMSA/89.zarr.zip'
+model_path = './model'
+msa_path = './89.zarr.zip'
 
 # 读取数据
-test_data = pd.read_csv("../data/Testing1_Label_700pos_486neg_start-lost_hg38_1001bp_kmer_random.csv", header=0)
+test_data = pd.read_csv("../data/test.csv", header=0)
 
 # 加载MSA数据
 genome_msa = GenomeMSA(msa_path)
@@ -59,4 +59,4 @@ with torch.no_grad():  # 不需要计算梯度，节省内存和计算资源
 
 # 将NumPy数组转换为PyTorch张量并保存为.pth文件
 features_tensor = torch.from_numpy(features_np)
-torch.save(features_tensor, './Testing1_Label_700pos_486neg_start-lost_hg38_GPN-MSA_fea.pth')
+torch.save(features_tensor, '../data/test_GPN-MSA_feature.pth')

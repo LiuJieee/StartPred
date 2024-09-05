@@ -4,11 +4,11 @@
 import pandas as pd
 
 
-csv_file_path = '/data1/liujie/3-model/start-lost_dataset/2-Testing1_Label_700pos_486neg_start-lost_hg38_1001bp_kmer_random.csv'
+csv_file_path = '../data/test.csv'
   
 
-fasta_ref_path = 'Testing1_Label_700pos_486neg_start-lost_hg38_1001bp_kmer_random_ref-seq.fasta'
-fasta_alt_path = 'Testing1_Label_700pos_486neg_start-lost_hg38_1001bp_kmer_random_alt-seq.fasta'
+fasta_ref_path = 'test_ref-seq.fasta'
+fasta_alt_path = 'test_alt-seq.fasta'
   
 
 df = pd.read_csv(csv_file_path)
