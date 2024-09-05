@@ -45,7 +45,7 @@ For more information about DanQ, see https://doi.org/10.1093/nar/gkw226 and http
 ### Input format
 StartPred supports variants in CSV format as input. The input file should contain at least 7 columns in the header as follows. [Sample file](./data/test.csv)
 
-|  Chr  | Pos |  Ref  |  Alt  |  Label  |  Reference sequence  |  Mutation sequence  |  ...  |
+|  Chr  | Pos |  Ref  |  Alt  |  Label  |  Reference sequence  |  Mutated sequence  |  ...  |
 | ----- | --- | ----- | ----- | ------- | -------------------- | ------------------- | ----- |
 
 ### Quantify the Ref-seq feature based on GPN-MSA
