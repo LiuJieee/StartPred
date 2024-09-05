@@ -1,7 +1,7 @@
 # Prediction of human pathogenic start lost variants based on multi-channel features
 
 StartPred is a prediction method specifically designed to identify pathogenic start loss variants. This method leverages multi-channel features associated with the mutation's contextual sequence, capturing information of evolutionary conservation, nucleotide patterns, and epigenetic modifications. This work lays a foundation for accurately decipher the functional impact of start loss variants in the human genome.
-![Main Figure](figs/StartPred_flowchart.png)
+![Main Figure](./figs/StartPred_flowchart.png)
 
 ## Precomputed StartPred scores
 We have generated StartPred scores for all possible start loss variants in canonical transcripts on human hg38 which can be acessed through https://zenodo.org/records/13689721.
@@ -43,7 +43,7 @@ For more information about DanQ, see https://doi.org/10.1093/nar/gkw226 and http
 ## Quick start
 
 ### Input format
-StartPred supports variants in CSV format as input. The input file should contain at least 7 columns in the header as follows. [Sample file](data/test.csv)
+StartPred supports variants in CSV format as input. The input file should contain at least 7 columns in the header as follows. [Sample file](./data/test.csv)
 
 |  Chr  | Pos |  Ref  |  Alt  |  Label  |  Reference sequence  |  Mutation sequence  |  ...  |
 | ----- | --- | ----- | ----- | ------- | -------------------- | ------------------- | ----- |
