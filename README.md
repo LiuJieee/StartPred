@@ -1,4 +1,4 @@
-# Prediction of human pathogenic start lost variants based on multi-channel features
+# Prediction of human pathogenic start loss variants based on multi-channel features
 
 StartPred is a prediction method specifically designed to identify pathogenic start loss variants. This method leverages multi-channel features associated with the mutation's contextual sequence, capturing information of evolutionary conservation, nucleotide patterns, and epigenetic modifications. This work lays a foundation for accurately decipher the functional impact of start loss variants in the human genome.
 ![Main Figure](./figs/StartPred_flowchart.png)
