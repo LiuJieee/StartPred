@@ -77,7 +77,7 @@ python main.py
 ## Cite us
 ```
 @misc{
-      title={Prediction of human pathogenic start lost variants based on multi-channel features}, 
+      title={Prediction of human pathogenic start loss variants based on multi-channel features}, 
       author={Jie Liu and Chen Wei and Henghui Fan and Lihua Wang and Bin Ye and Junfeng Xia},
       year={2024}
 }
