@@ -46,7 +46,9 @@ For more information about DanQ, see https://doi.org/10.1093/nar/gkw226 and http
 StartPred supports variants in CSV format as input. The input file should contain at least 7 columns in the header as follows. [Sample file](./data/test.csv)
 
 |  Chr  | Pos |  Ref  |  Alt  |  Label  |  Reference sequence  |  Mutated sequence  |  ...  |
-| ----- | --- | ----- | ----- | ------- | -------------------- | ------------------- | ----- |
+| ----- | --- | ----- | ----- | ------- | -------------------- | ------------------ | ----- |
+
+Please note that the length of both the reference and mutated sequences are 1001 base pairs(bp), with the mutation site at the center, and the context sequences on each side are 500 bp.
 
 ### Quantify the Ref-seq feature based on GPN-MSA
 ```bash
@@ -54,7 +56,7 @@ conda activate GPN-MSA
 cd GPNMSA
 python GPN-MSA_feature_prepare.py
 ```
-In this section, the example file titled 'test_GPN-MSA_feature.pth' is available for download at https://zenodo.org/records/13689721.
+In this section, the example output file titled 'test_GPN-MSA_feature.pth' is available for download at https://zenodo.org/records/13689721.
 
 ### Quantify the epigenetic feature based on DanQ
 ```bash
@@ -65,7 +67,7 @@ python DanQ_feature_prepare.py
 ```
 Please note that input files (.fasta) for 'DanQ_feature_prepare.py' must not contain any blank lines.
 
-In this section, the example file titled 'test_DanQ_features.h5' is available for download at https://zenodo.org/records/13689721.
+In this section, the example output file titled 'test_DanQ_features.h5' is available for download at https://zenodo.org/records/13689721.
 
 ### Pathogenicity prediction
 ```bash
@@ -73,6 +75,13 @@ conda activate StartPred
 cd StartPred
 python main.py
 ```
+
+### Output format
+This program produces two output files.
+
+The first file is 'sta_test.csv'[Sample file](./result/sta_test.csv). It provides a comprehensive overview of StartPred's predictive performance on the dataset, encompassing various metrics such as recall, specificity (SPE), precision (PRE), F1-score (F1), Matthew's correlation coefficient (MCC), accuracy (ACC), the area under the receiver operating characteristic curve (AUC), and the area under the precision-recall curve (AUPR).
+
+The second file is 'test_pred_score.txt'[Sample file](./result/test_pred_score.txt). It contains a list of scores assigned by StartPred to each variant in the dataset, with the sample order matching that of the input data in 'data/test.csv'. The scoring threshold for StartPred is established at 0.5, whereby variants scoring below 0.5 are designated as benign and those scoring above 0.5 are identified as pathogenic.
 
 ## Cite us
 ```

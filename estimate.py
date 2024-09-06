@@ -26,4 +26,4 @@ def scores(score_label, Y_True, th=0.5):
     precision_aupr, recall_aupr, _ = precision_recall_curve(Y_True, score_label)
     AUPR = auc(recall_aupr, precision_aupr)
 
-    return Recall, SPE, wujianlv, loujianlv, Precision, F1, MCC, Acc, AUC, AUPR
+    return Recall, SPE, Precision, F1, MCC, Acc, AUC, AUPR

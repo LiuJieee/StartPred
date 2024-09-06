@@ -132,7 +132,7 @@ def spent_time(start, end):
 
 def save_results(model_name, start, end, test_score, file_path):
     #    title = ['Model', 'Aiming', 'Coverage', 'Accuracy', 'Absolute_True', 'Absolute_False', 'RunTime', 'Test_Time']
-    title = ['Model', 'Recall', 'SPE', 'wujianlv', 'loujianlv', 'Precision', 'F1', 'MCC', 'Acc', 'AUC', 'AUPR',
+    title = ['Model', 'Recall', 'SPE', 'Precision', 'F1', 'MCC', 'Acc', 'AUC', 'AUPR',
              'RunTime', 'Test_Time']
 
     now = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
@@ -145,8 +145,6 @@ def save_results(model_name, start, end, test_score, file_path):
                 '%.3f' % test_score[5],
                 '%.3f' % test_score[6],
                 '%.3f' % test_score[7],
-                '%.3f' % test_score[8],
-                '%.3f' % test_score[9],
                 '%.3f' % (end - start),
                 now]]
 
@@ -234,6 +232,9 @@ def main(paths=None):
 
             model_predictions, true_labels = predict(model, test_dataset, device=DEVICE)
             
+            result = pd.DataFrame(model_predictions) ###Êä³öÔ¤²â·ÖÊý
+            result.to_csv('./result/test_pred_score.txt', sep='\t', index=False, header=False)
+            
             test_score = estimate.scores(model_predictions, true_labels, args.threshold)
 
 
@@ -245,7 +246,7 @@ def main(paths=None):
 
 
             print(f"{args.model_name}, test set:")
-            metric = ["Recall", "SPE", "wujianlv", "loujianlv", "Precision", "F1", "MCC", "Acc", "AUC", "AUPR"]
+            metric = ["Recall", "SPE", "Precision", "F1", "MCC", "Acc", "AUC", "AUPR"]
             for k in range(len(metric)):
                 print(f"{metric[k]}: {test_score[k]}\n")
             run_time = time.time()
