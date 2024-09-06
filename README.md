@@ -87,7 +87,7 @@ The second file is 'test_pred_score.txt' [Sample file](./result/test_pred_score.
 ```
 @misc{
       title={Prediction of human pathogenic start loss variants based on multi-channel features}, 
-      author={Jie Liu and Chen Wei and Henghui Fan and Lihua Wang and Bin Ye and Junfeng Xia},
+      author={Jie Liu and Lihua Wang and Yansen Su and Bin Ye and Junfeng Xia},
       year={2024}
 }
 ```
