@@ -79,9 +79,9 @@ python main.py
 ### Output format
 This program produces two output files.
 
-The first file is 'sta_test.csv'[Sample file](./result/sta_test.csv). It provides a comprehensive overview of StartPred's predictive performance on the dataset, encompassing various metrics such as recall, specificity (SPE), precision (PRE), F1-score (F1), Matthew's correlation coefficient (MCC), accuracy (ACC), the area under the receiver operating characteristic curve (AUC), and the area under the precision-recall curve (AUPR).
+The first file is 'sta_test.csv' [Sample file](./result/sta_test.csv). It provides a comprehensive overview of StartPred's predictive performance on the dataset, encompassing various metrics such as recall, specificity (SPE), precision (PRE), F1-score (F1), Matthew's correlation coefficient (MCC), accuracy (ACC), the area under the receiver operating characteristic curve (AUC), and the area under the precision-recall curve (AUPR).
 
-The second file is 'test_pred_score.txt'[Sample file](./result/test_pred_score.txt). It contains a list of scores assigned by StartPred to each variant in the dataset, with the sample order matching that of the input data in 'data/test.csv'. The scoring threshold for StartPred is established at 0.5, whereby variants scoring below 0.5 are designated as benign and those scoring above 0.5 are identified as pathogenic.
+The second file is 'test_pred_score.txt' [Sample file](./result/test_pred_score.txt). It contains a list of scores assigned by StartPred to each variant in the dataset, with the sample order matching that of the input data in 'data/test.csv'. The scoring threshold for StartPred is established at 0.5, whereby variants scoring below 0.5 are designated as benign and those scoring above 0.5 are identified as pathogenic.
 
 ## Cite us
 ```
