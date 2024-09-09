@@ -6,7 +6,6 @@ import torch.nn as nn
 import torch.nn.functional as F
 import math
 from models.ban import BANLayer
-from models.FFN import FeatureFusionNetwork
 
 class TextCNN_block1(nn.Module):
     def __init__(self, vocab_size, embedding_dim_DLM, embedding_dim_seq, DLM_seq_len, sequence_length, n_filters, filter_sizes, output_dim, dropout):
@@ -15,7 +14,7 @@ class TextCNN_block1(nn.Module):
                                               out_channels=n_filters,
                                               kernel_size=fs,
                                               padding='same')
-                                    for fs in filter_sizes])  # ¶à·ÖÖ¦¾í»ı
+                                    for fs in filter_sizes])  # å¤šåˆ†æå·ç§¯
         self.fc1 = nn.Linear(1920, 512)
         self.fc = nn.Sequential(
             nn.Linear(512, 32),
@@ -31,24 +30,24 @@ class TextCNN_block1(nn.Module):
 
 
     def forward(self, DLM_fea, seq_data, chr_data):
-        # ¶ÔÊäÈëÊı¾İ½øĞĞÎ¬¶È±ä»»
-        # ½«ÊäÈëÊı¾İµÄÎ¬¶È´Ó [batch_size, sequence_length, embedding_dim] ±äÎª [batch_size, embedding_dim, sequence_length]
+        # å¯¹è¾“å…¥æ•°æ®è¿›è¡Œç»´åº¦å˜æ¢
+        # å°†è¾“å…¥æ•°æ®çš„ç»´åº¦ä» [batch_size, sequence_length, embedding_dim] å˜ä¸º [batch_size, embedding_dim, sequence_length]
         DLM_embedded = DLM_fea.permute(0, 2, 1)
-        # Ó¦ÓÃ¾í»ı²ã²¢ºÏ²¢½á¹û
-        DLM_conved = [self.Mish1(conv(DLM_embedded)) for conv in self.convs1] # nn.Conv1d ĞèÒªµÄÊÇ [batch_size, channels, sequence_length] ĞÎ×´µÄÊı¾İ
+        # åº”ç”¨å·ç§¯å±‚å¹¶åˆå¹¶ç»“æœ
+        DLM_conved = [self.Mish1(conv(DLM_embedded)) for conv in self.convs1] # nn.Conv1d éœ€è¦çš„æ˜¯ [batch_size, channels, sequence_length] å½¢çŠ¶çš„æ•°æ®
 
-        # ³Ø»¯²ã
+        # æ± åŒ–å±‚
         DLM_pooled = [F.max_pool1d(conv, math.ceil(conv.shape[2] // 10)) for conv in DLM_conved]
 
-        # ¶à·ÖÖ§ÏßĞÔÕ¹¿ª
+        # å¤šåˆ†æ”¯çº¿æ€§å±•å¼€
         DLM_flatten = [pool.contiguous().view(pool.size(0), -1) for pool in DLM_pooled]
 
-        # ½«¸÷·ÖÖ§Á¬½ÓÔÚÒ»Æğ
-        DLM_cat = self.dropout1(torch.cat(DLM_flatten, dim=1))  ##¶à·ÖÖ§Á¬½Óºó£¬Î¬¶ÈÎª£ºn_filters * filter_sizes * 10
-        DLM_cat_i = self.fc1(DLM_cat)   #Ê¹ÓÃÏßĞÔ²ã½øĞĞÎ¬¶È±ä»»
+        # å°†å„åˆ†æ”¯è¿æ¥åœ¨ä¸€èµ·
+        DLM_cat = self.dropout1(torch.cat(DLM_flatten, dim=1))  ##å¤šåˆ†æ”¯è¿æ¥åï¼Œç»´åº¦ä¸ºï¼šn_filters * filter_sizes * 10
+        DLM_cat_i = self.fc1(DLM_cat)   #ä½¿ç”¨çº¿æ€§å±‚è¿›è¡Œç»´åº¦å˜æ¢
         DLM_cat_i = self.batchnorm1(DLM_cat_i)
 
-        # Êä³öÌØÕ÷²¢·ÖÀà
+        # è¾“å‡ºç‰¹å¾å¹¶åˆ†ç±»
         return self.fc(DLM_cat_i), DLM_cat_i
 
 
@@ -59,7 +58,7 @@ class TextCNN_block2(nn.Module):
                                               out_channels=n_filters,
                                               kernel_size=fs,
                                               padding='same')
-                                    for fs in filter_sizes])  # ¶à·ÖÖ¦¾í»ı
+                                    for fs in filter_sizes])  # å¤šåˆ†æå·ç§¯
         self.fc2 = nn.Linear(1920, 512)
         self.fc6 = nn.Linear(919, 512)
         self.fc3 = nn.Sequential(
@@ -78,29 +77,29 @@ class TextCNN_block2(nn.Module):
 
 
     def forward(self, DLM_fea, seq_data, chr_data):
-        # ¶ÔÊäÈëÊı¾İ½øĞĞ´ÊÏòÁ¿Ó³Éä
+        # å¯¹è¾“å…¥æ•°æ®è¿›è¡Œè¯å‘é‡æ˜ å°„
 #        seq_embedded = self.embedding(seq_data)
-        # ¶ÔÊäÈëÊı¾İ½øĞĞÎ¬¶È±ä»»
+        # å¯¹è¾“å…¥æ•°æ®è¿›è¡Œç»´åº¦å˜æ¢
         seq_embedded2 = seq_data.permute(0, 2, 1)
-        # Ó¦ÓÃ¾í»ı²ã²¢ºÏ²¢½á¹û
-        seq_conved = [self.Mish2(conv(seq_embedded2)) for conv in self.convs2] # nn.Conv1d ĞèÒªµÄÊÇ [batch_size, channels, sequence_length] ĞÎ×´µÄÊı¾İ
-        # ³Ø»¯²ã
+        # åº”ç”¨å·ç§¯å±‚å¹¶åˆå¹¶ç»“æœ
+        seq_conved = [self.Mish2(conv(seq_embedded2)) for conv in self.convs2] # nn.Conv1d éœ€è¦çš„æ˜¯ [batch_size, channels, sequence_length] å½¢çŠ¶çš„æ•°æ®
+        # æ± åŒ–å±‚
         seq_pooled = [F.max_pool1d(conv, math.ceil(conv.shape[2] // 10)) for conv in seq_conved]
-        # ¶à·ÖÖ§ÏßĞÔÕ¹¿ª
+        # å¤šåˆ†æ”¯çº¿æ€§å±•å¼€
         seq_flatten = [pool.contiguous().view(pool.size(0), -1) for pool in seq_pooled]
-        # ½«¸÷·ÖÖ§Á¬½ÓÔÚÒ»Æğ
-        seq_cat = self.dropout2(torch.cat(seq_flatten, dim=1))  ##¶à·ÖÖ§Á¬½Óºó£¬Î¬¶ÈÎª£ºn_filters * filter_sizes * 10
-        seq_cat_i = self.fc2(seq_cat)   #Ê¹ÓÃÏßĞÔ²ã½øĞĞÎ¬¶È±ä»»
+        # å°†å„åˆ†æ”¯è¿æ¥åœ¨ä¸€èµ·
+        seq_cat = self.dropout2(torch.cat(seq_flatten, dim=1))  ##å¤šåˆ†æ”¯è¿æ¥åï¼Œç»´åº¦ä¸ºï¼šn_filters * filter_sizes * 10
+        seq_cat_i = self.fc2(seq_cat)   #ä½¿ç”¨çº¿æ€§å±‚è¿›è¡Œç»´åº¦å˜æ¢
         seq_cat_i = self.batchnorm2(seq_cat_i)
 
-        # ¼ÓÔØÈ¾É«ÖÊÏà¹ØÊı¾İ
+        # åŠ è½½æŸ“è‰²è´¨ç›¸å…³æ•°æ®
         fea_data = self.batchnorm4(chr_data)
-        fea = self.fc6(fea_data)   #Ê¹ÓÃÏßĞÔ²ã½øĞĞÎ¬¶È±ä»»
+        fea = self.fc6(fea_data)   #ä½¿ç”¨çº¿æ€§å±‚è¿›è¡Œç»´åº¦å˜æ¢
 
-        # ½«ĞòÁĞÊı¾İºÍÈ¾É«ÖÊÏà¹ØÊı¾İÈÚºÏÔÚÒ»Æğ
+        # å°†åºåˆ—æ•°æ®å’ŒæŸ“è‰²è´¨ç›¸å…³æ•°æ®èåˆåœ¨ä¸€èµ·
         fusion, att_weight = self.ban1(seq_cat_i.unsqueeze(1), fea.unsqueeze(1))
        
-        # Êä³öÌØÕ÷²¢·ÖÀà
+        # è¾“å‡ºç‰¹å¾å¹¶åˆ†ç±»
         return self.fc3(fusion), fusion
         
 
@@ -125,15 +124,15 @@ class StartPred(nn.Module):
         
 
     def forward(self, DLM_fea, seq_data, chr_data):
-        # ¶ÔÊäÈëÊı¾İ½øĞĞ´¦Àí
-        _, data1 = self.DLM_encoder(DLM_fea, seq_data, chr_data) #GPN-MSA¡úTextCNNµÄÌØÕ÷
-        _, data2 = self.seq_encoder1(DLM_fea, seq_data, chr_data) #Í»±äĞòÁĞ¼°±í¹ÛÒÅ´«ĞŞÊÎµÄÈÚºÏÌØÕ÷
+        # å¯¹è¾“å…¥æ•°æ®è¿›è¡Œå¤„ç†
+        _, data1 = self.DLM_encoder(DLM_fea, seq_data, chr_data) #GPN-MSAâ†’TextCNNçš„ç‰¹å¾
+        _, data2 = self.seq_encoder1(DLM_fea, seq_data, chr_data) #çªå˜åºåˆ—åŠè¡¨è§‚é—ä¼ ä¿®é¥°çš„èåˆç‰¹å¾
 
 
-        # ½«Á½ÀàÊä³öÌØÕ÷Æ´½Ó
+        # å°†ä¸¤ç±»è¾“å‡ºç‰¹å¾æ‹¼æ¥
         fea = torch.cat([data1, data2], dim=1)
         fea = self.batchnorm3(fea)
 
 
-        # Êä³öÌØÕ÷²¢·ÖÀà
+        # è¾“å‡ºç‰¹å¾å¹¶åˆ†ç±»
         return self.fc5(fea), fea
