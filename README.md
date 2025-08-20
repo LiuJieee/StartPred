@@ -4,7 +4,7 @@ StartPred is a prediction method specifically designed to identify pathogenic st
 ![Main Figure](./figs/StartPred_flowchart.png)
 
 ## Precomputed StartPred scores
-We have generated StartPred scores for all possible start loss variants in canonical transcripts on human hg38 which can be acessed through https://zenodo.org/records/16907930.
+We have generated StartPred scores for all possible start loss variants in canonical transcripts on human hg38 which can be acessed through https://zenodo.org/records/13689721.
 
 ## Basic requirements
 To install dependencies, create a new conda environment:
@@ -56,7 +56,7 @@ conda activate GPN-MSA
 cd GPNMSA
 python GPN-MSA_feature_prepare.py
 ```
-In this section, the example output file titled 'test_GPN-MSA_feature.pth' is available for download at https://zenodo.org/records/16907930.
+In this section, the example output file titled 'test_GPN-MSA_feature.pth' is available for download at https://zenodo.org/records/13689721.
 
 ### Quantify the epigenetic feature based on DanQ
 ```bash
@@ -67,7 +67,7 @@ python DanQ_feature_prepare.py
 ```
 Please note that input files (.fasta) for 'DanQ_feature_prepare.py' must not contain any blank lines.
 
-In this section, the example output file titled 'test_DanQ_features.h5' is available for download at https://zenodo.org/records/16907930.
+In this section, the example output file titled 'test_DanQ_features.h5' is available for download at https://zenodo.org/records/13689721.
 
 ### Pathogenicity prediction
 ```bash
